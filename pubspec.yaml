@@ -1,7 +1,7 @@
 name: service_client
 description: An http client interface.
 version: 0.1.0
-# repository: https://github.com/my_org/my_repo
+repository: https://github.com/macss-dev/service_client
 
 environment:
   sdk: '>=3.0.0 <4.0.0'
