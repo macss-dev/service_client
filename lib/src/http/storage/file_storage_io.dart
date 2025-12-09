@@ -370,7 +370,8 @@ final class FileStorageAdapter implements TokenStorageAdapter {
     final current = _serial.then((_) => action());
 
     // Update the chain, swallowing errors to keep future tasks running.
-    _serial = current.then((_) {}, onError: (Object error, StackTrace stackTrace) {});
+    _serial =
+        current.then((_) {}, onError: (Object error, StackTrace stackTrace) {});
 
     return current;
   }

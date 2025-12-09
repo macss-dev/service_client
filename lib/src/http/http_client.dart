@@ -19,9 +19,11 @@ Future<dynamic> httpClient({
     defaultHeaders: headers ?? const {},
     auth: auth,
   );
-  
+
   try {
-    client = HttpServiceClient(config,);
+    client = HttpServiceClient(
+      config,
+    );
 
     final request = ServiceRequest.http(
       method: method,
@@ -34,10 +36,8 @@ Future<dynamic> httpClient({
   } on AuthReLoginException {
     rethrow;
   } catch (e) {
-    stderr.writeln(
-      'HTTP Client Error: $e'
-      'url: $method $baseUrl$endpoint'
-    );
+    stderr.writeln('HTTP Client Error: $e'
+        'url: $method $baseUrl$endpoint');
     throw Exception('$errorMessage: [Connection error] - $e');
   } finally {
     await client?.close();
