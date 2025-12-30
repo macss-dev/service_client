@@ -2,6 +2,7 @@ import 'dart:io';
 
 import '../core/service_core.dart';
 import 'auth_exceptions.dart';
+import 'http_exceptions.dart';
 import 'http_service_client.dart';
 
 Future<dynamic> httpClient({
@@ -31,13 +32,30 @@ Future<dynamic> httpClient({
       body: body,
       errorMessage: errorMessage,
     );
+    
+    // Log request details
+    stderr.writeln('\n🔵 HTTP Request:');
+    stderr.writeln('   Method: $method');
+    stderr.writeln('   URL: $baseUrl$endpoint');
+    if (body != null) {
+      stderr.writeln('   Body: $body');
+    }
+    
     final response = await client.send(request);
+    
+    // Log response details
+    stderr.writeln('🟢 HTTP Response:');
+    stderr.writeln('   Status: ${response.statusCode}');
+    stderr.writeln('   Data: ${response.data}');
+    
     return response.data;
   } on AuthReLoginException {
     rethrow;
+  } on HttpClientException {
+    rethrow;
   } catch (e) {
-    stderr.writeln('HTTP Client Error: $e'
-        'url: $method $baseUrl$endpoint');
+    stderr.writeln('🔴 HTTP Client Error: $e');
+    stderr.writeln('   URL: $method $baseUrl$endpoint');
     throw Exception('$errorMessage: [Connection error] - $e');
   } finally {
     await client?.close();

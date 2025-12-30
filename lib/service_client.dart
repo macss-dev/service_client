@@ -18,6 +18,7 @@ export 'src/http/http_service_client.dart' show HttpServiceClient;
 export 'src/http/token.dart' show Token;
 export 'src/http/token_vault.dart' show TokenVault;
 export 'src/http/auth_exceptions.dart' show AuthReLoginException;
+export 'src/http/http_exceptions.dart' show HttpClientException;
 export 'src/http/storage/token_storage_adapter.dart'
     show TokenStorageAdapter, TokenStorageException;
 export 'src/http/storage/memory_storage_adapter.dart' show MemoryStorageAdapter;

@@ -5,6 +5,7 @@ import 'package:http/http.dart' as http;
 
 import '../core/service_core.dart';
 import 'auth_exceptions.dart';
+import 'http_exceptions.dart';
 import 'token.dart';
 import 'token_vault.dart';
 
@@ -123,9 +124,27 @@ class HttpServiceClient implements ServiceClient {
         throw AuthReLoginException();
       }
 
-      throw Exception('${request.errorMessage}: ${response.statusCode}');
+      // Log error response body for debugging
+      stderr.writeln('HTTP Error Response:');
+      stderr.writeln('  Status: ${response.statusCode}');
+      stderr.writeln('  Body: ${response.body}');
+      
+      // Parsear response body si es JSON
+      Map<String, dynamic>? responseData;
+      try {
+        responseData = jsonDecode(response.body) as Map<String, dynamic>?;
+      } catch (_) {
+        // Si no se puede parsear, dejar como null
+      }
+      
+      throw HttpClientException(
+        statusCode: response.statusCode,
+        message: request.errorMessage,
+        response: responseData,
+      );
     } catch (e) {
       if (e is AuthReLoginException) rethrow;
+      if (e is HttpClientException) rethrow;
 
       stderr.writeln('HTTP Client Error: $e');
       throw Exception('${request.errorMessage}: [Connection error] - $e');
