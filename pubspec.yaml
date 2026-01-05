@@ -1,6 +1,6 @@
 name: service_client
 description: An http client interface.
-version: 0.1.0
+version: 0.1.1
 repository: https://github.com/macss-dev/service_client
 
 environment:

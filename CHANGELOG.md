@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 The format loosely follows [Keep a Changelog](https://keepachangelog.com/)
 and the project adheres to [Semantic Versioning](https://semver.org/).
 
+## [0.1.1] - 2026-01-05
+### Added
+- `HttpClientException` for handling general HTTP client errors
+- Request logging for debugging HTTP requests
+- Response logging for debugging HTTP responses
+- Exception logging for better error tracking
+
 ## [0.1.0] - 2025-12-09
 ### Added
 - Initial release of **service_client**. Main features:
