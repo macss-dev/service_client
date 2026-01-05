@@ -128,7 +128,7 @@ class HttpServiceClient implements ServiceClient {
       stderr.writeln('HTTP Error Response:');
       stderr.writeln('  Status: ${response.statusCode}');
       stderr.writeln('  Body: ${response.body}');
-      
+
       // Parsear response body si es JSON
       Map<String, dynamic>? responseData;
       try {
@@ -136,7 +136,7 @@ class HttpServiceClient implements ServiceClient {
       } catch (_) {
         // Si no se puede parsear, dejar como null
       }
-      
+
       throw HttpClientException(
         statusCode: response.statusCode,
         message: request.errorMessage,
