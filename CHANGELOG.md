@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format loosely follows [Keep a Changelog](https://keepachangelog.com/)
 and the project adheres to [Semantic Versioning](https://semver.org/).
 
+## [0.1.2] - 2026-03-05
+### Fixed
+- Replaced `dart:io` (`stderr`) with `dart:developer` (`log`) in `http_client.dart` and `http_service_client.dart` for Flutter web compatibility
+
 ## [0.1.1] - 2026-01-05
 ### Added
 - `HttpClientException` for handling general HTTP client errors

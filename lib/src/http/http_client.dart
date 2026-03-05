@@ -1,4 +1,4 @@
-import 'dart:io';
+import 'dart:developer' as dev;
 
 import '../core/service_core.dart';
 import 'auth_exceptions.dart';
@@ -34,19 +34,19 @@ Future<dynamic> httpClient({
     );
 
     // Log request details
-    stderr.writeln('\n🔵 HTTP Request:');
-    stderr.writeln('   Method: $method');
-    stderr.writeln('   URL: $baseUrl$endpoint');
+    dev.log('\n🔵 HTTP Request:');
+    dev.log('   Method: $method');
+    dev.log('   URL: $baseUrl$endpoint');
     if (body != null) {
-      stderr.writeln('   Body: $body');
+      dev.log('   Body: $body');
     }
 
     final response = await client.send(request);
 
     // Log response details
-    stderr.writeln('🟢 HTTP Response:');
-    stderr.writeln('   Status: ${response.statusCode}');
-    stderr.writeln('   Data: ${response.data}');
+    dev.log('🟢 HTTP Response:');
+    dev.log('   Status: ${response.statusCode}');
+    dev.log('   Data: ${response.data}');
 
     return response.data;
   } on AuthReLoginException {
@@ -54,8 +54,8 @@ Future<dynamic> httpClient({
   } on HttpClientException {
     rethrow;
   } catch (e) {
-    stderr.writeln('🔴 HTTP Client Error: $e');
-    stderr.writeln('   URL: $method $baseUrl$endpoint');
+    dev.log('🔴 HTTP Client Error: $e');
+    dev.log('   URL: $method $baseUrl$endpoint');
     throw Exception('$errorMessage: [Connection error] - $e');
   } finally {
     await client?.close();

@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'dart:io';
+import 'dart:developer' as dev;
 
 import 'package:http/http.dart' as http;
 
@@ -125,9 +125,9 @@ class HttpServiceClient implements ServiceClient {
       }
 
       // Log error response body for debugging
-      stderr.writeln('HTTP Error Response:');
-      stderr.writeln('  Status: ${response.statusCode}');
-      stderr.writeln('  Body: ${response.body}');
+      dev.log('HTTP Error Response:');
+      dev.log('  Status: ${response.statusCode}');
+      dev.log('  Body: ${response.body}');
 
       // Parsear response body si es JSON
       Map<String, dynamic>? responseData;
@@ -146,7 +146,7 @@ class HttpServiceClient implements ServiceClient {
       if (e is AuthReLoginException) rethrow;
       if (e is HttpClientException) rethrow;
 
-      stderr.writeln('HTTP Client Error: $e');
+      dev.log('HTTP Client Error: $e');
       throw Exception('${request.errorMessage}: [Connection error] - $e');
     }
   }
@@ -225,7 +225,7 @@ Future<bool> _tryRefresh({
 
     return false;
   } catch (e) {
-    stderr.writeln('Token refresh error: $e');
+    dev.log('Token refresh error: $e');
     return false;
   }
 }

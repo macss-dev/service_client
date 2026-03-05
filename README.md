@@ -16,7 +16,7 @@ Add this to your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  service_client: ^0.1.0
+  service_client: ^0.1.2
 ```
 
 ## Usage
