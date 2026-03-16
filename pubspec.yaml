@@ -1,16 +1,13 @@
 name: service_client
-description: An http client interface.
-version: 0.1.2
+description: A service client abstraction for Dart with the Result pattern. Includes an HTTP implementation.
+version: 0.2.0
 repository: https://github.com/macss-dev/service_client
 
 environment:
   sdk: '>=3.0.0 <4.0.0'
 
-# Add regular dependencies here.
 dependencies:
-  cryptography: ^2.9.0
   http: ^1.6.0
-  path: ^1.9.1
 
 dev_dependencies:
   lints: ^6.0.0

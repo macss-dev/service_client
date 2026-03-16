@@ -1,10 +1,13 @@
 import 'dart:developer' as dev;
 
 import '../core/service_core.dart';
-import 'auth_exceptions.dart';
 import 'http_exceptions.dart';
 import 'http_service_client.dart';
 
+/// Convenience function for one-shot HTTP requests.
+///
+/// Creates a temporary [HttpServiceClient], sends the request,
+/// and closes the client. Returns the parsed response data.
 Future<dynamic> httpClient({
   required String method,
   required String baseUrl,
@@ -12,19 +15,15 @@ Future<dynamic> httpClient({
   Map<String, String>? headers,
   Map<String, dynamic>? body,
   String errorMessage = 'Error in HTTP request',
-  bool auth = false,
 }) async {
   ServiceClient? client;
   final config = ServiceClientConfig(
     baseUrl: Uri.parse(baseUrl),
     defaultHeaders: headers ?? const {},
-    auth: auth,
   );
 
   try {
-    client = HttpServiceClient(
-      config,
-    );
+    client = HttpServiceClient(config);
 
     final request = ServiceRequest.http(
       method: method,
@@ -33,7 +32,6 @@ Future<dynamic> httpClient({
       errorMessage: errorMessage,
     );
 
-    // Log request details
     dev.log('\n🔵 HTTP Request:');
     dev.log('   Method: $method');
     dev.log('   URL: $baseUrl$endpoint');
@@ -43,14 +41,11 @@ Future<dynamic> httpClient({
 
     final response = await client.send(request);
 
-    // Log response details
     dev.log('🟢 HTTP Response:');
     dev.log('   Status: ${response.statusCode}');
     dev.log('   Data: ${response.data}');
 
     return response.data;
-  } on AuthReLoginException {
-    rethrow;
   } on HttpClientException {
     rethrow;
   } catch (e) {

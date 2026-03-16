@@ -1,17 +1,19 @@
-enum ServiceProtocol { http, graphql, grpc, websocket, mq }
+/// Transport protocol used by a [ServiceRequest].
+///
+/// Currently only [http] is implemented. Future versions may add
+/// additional protocols (gRPC, WebSocket, message queues).
+enum ServiceProtocol { http }
 
 class ServiceClientConfig {
   ServiceClientConfig({
     required Uri baseUrl,
     this.defaultHeaders = const {},
     this.timeout = const Duration(seconds: 30),
-    this.auth = false,
   }) : baseUrl = _normalizeBaseUrl(baseUrl);
 
   final Uri baseUrl;
   final Map<String, String> defaultHeaders;
   final Duration timeout;
-  final bool auth;
 
   static Uri _normalizeBaseUrl(Uri uri) {
     // Ensure that the path ends with / for correct endpoint resolution
