@@ -133,32 +133,32 @@ Each step follows the Red-Green-Refactor cycle. **Commit after each step passes 
 
 ### Fase 4 — Metadata y Docs
 
-- [ ] Step 14: Actualizar `pubspec.yaml` — versión `0.2.0`
-  - [ ] Cambiar `version: 0.1.2` → `version: 0.2.0`
-  - [ ] Verificar que `cryptography` ya fue eliminada en paso 8
-  - [ ] `git commit`
+- [x] Step 14: Actualizar `pubspec.yaml` — versión `0.2.0`
+  - [x] Cambiar `version: 0.1.2` → `version: 0.2.0`
+  - [x] Verificar que `cryptography` ya fue eliminada en paso 8
+  - [x] `git commit` — `7ffaea2`
 
-- [ ] Step 15: Actualizar `README.md`
-  - [ ] Nuevo example con Result pattern y MVC (View → Controller → Service → Result)
-  - [ ] Eliminar referencias a auth, Token, TokenVault, storage adapters
-  - [ ] `git commit`
+- [x] Step 15: Actualizar `README.md`
+  - [x] Nuevo example con Result pattern y MVC (View → Controller → Service → Result)
+  - [x] Eliminar referencias a auth, Token, TokenVault, storage adapters
+  - [x] `git commit` — `7ffaea2`
 
-- [ ] Step 16: Actualizar `CHANGELOG.md`
-  - [ ] Documentar breaking changes de v0.2.0:
+- [x] Step 16: Actualizar `CHANGELOG.md`
+  - [x] Documentar breaking changes de v0.2.0:
     - Added: `Result<S, F>` sealed class, `Success`, `Failure`, `ServiceFailure`
     - Removed: `Token`, `TokenVault`, `AuthReLoginException`, `TokenStorageAdapter`, `MemoryStorageAdapter`, `FileStorageAdapter`, `AesGcmEncryptor`, `TokenEncryptor`, `PassphraseProvider`
     - Removed: `auth` parameter from `ServiceClientConfig` and `httpClient()`
     - Removed: `cryptography` dependency
-  - [ ] `git commit`
+  - [x] `git commit` — `7ffaea2`
 
 ### Validación Final
 
-- [ ] Step 17: Validación completa
-  - [ ] `dart analyze` — cero errores, cero warnings
-  - [ ] `dart test` — todos los tests pasan
-  - [ ] `dart run example/example.dart` — flujo MVC completo funciona
-  - [ ] Grep: cero referencias a `Token`, `TokenVault`, `AuthReLoginException` en lib/ y example/
-  - [ ] Verificar que sealed class fuerza exhaustive check (omitir un case en switch debe generar error de compilación)
+- [x] Step 17: Validación completa
+  - [x] `dart analyze` — 0 issues found ✓
+  - [x] `dart test` — 8/8 passed ✓
+  - [x] `dart run example/example.dart` — flujo MVC completo funciona ✓
+  - [x] Grep: cero referencias a `Token`, `TokenVault`, `AuthReLoginException` en lib/ y example/ ✓
+  - [x] Verificar que sealed class fuerza exhaustive check — omitir Failure produce `non_exhaustive_switch_expression` error ✓
 
 ## Constraints
 
