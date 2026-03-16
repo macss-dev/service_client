@@ -1,9 +1,12 @@
-/// Support for doing something awesome.
+/// A service client abstraction for Dart applications.
 ///
-/// More dartdocs go here.
+/// Provides a transport-agnostic interface ([ServiceClient]) with an HTTP
+/// implementation included, and the Result pattern for explicit
+/// success/failure handling.
 library;
 
-/// service core
+/// core — service abstractions and Result pattern
+export 'src/core/result.dart' show Result, Success, Failure;
 export 'src/core/service_core.dart'
     show
         ServiceClient,
@@ -11,20 +14,9 @@ export 'src/core/service_core.dart'
         ServiceRequest,
         ServiceResponse,
         ServiceProtocol;
+export 'src/core/service_failure.dart' show ServiceFailure;
 
-/// http
+/// http — client implementation
 export 'src/http/http_client.dart' show httpClient;
-export 'src/http/http_service_client.dart' show HttpServiceClient;
-export 'src/http/token.dart' show Token;
-export 'src/http/token_vault.dart' show TokenVault;
-export 'src/http/auth_exceptions.dart' show AuthReLoginException;
 export 'src/http/http_exceptions.dart' show HttpClientException;
-export 'src/http/storage/token_storage_adapter.dart'
-    show TokenStorageAdapter, TokenStorageException;
-export 'src/http/storage/memory_storage_adapter.dart' show MemoryStorageAdapter;
-export 'src/http/storage/file_storage_adapter.dart'
-    show
-        FileStorageAdapter,
-        AesGcmEncryptor,
-        TokenEncryptor,
-        PassphraseProvider;
+export 'src/http/http_service_client.dart' show HttpServiceClient;
