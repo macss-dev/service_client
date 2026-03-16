@@ -1,11 +1,21 @@
-import 'services/json_placeholder_service.dart';
+import 'package:service_client/service_client.dart';
 
-/// A simple example that uses JsonPlaceholderService
+import 'controllers/todo_controller.dart';
+
+/// View layer — delegates to the controller, renders based on Result.
 void main() async {
-  print('Calling JSONPlaceholder public API...\n');
+  final controller = TodoController();
 
-  final todo = await JsonPlaceholderService.getTodo(1);
+  print('Fetching ToDo #1 from JSONPlaceholder...\n');
+  final result = await controller.fetchTodo(1);
 
-  print('Received TODO item:');
-  print(todo);
+  // Pattern matching forces handling of both cases at compile-time
+  switch (result) {
+    case Success(:final value):
+      print('  ID:        ${value.id}');
+      print('  Title:     ${value.title}');
+      print('  Completed: ${value.isCompleted}');
+    case Failure(:final error):
+      print('Error ${error.statusCode}: ${error.message}');
+  }
 }
