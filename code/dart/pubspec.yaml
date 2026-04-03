@@ -1,7 +1,10 @@
 name: service_client
 description: A service client abstraction for Dart with the Result pattern. Includes an HTTP implementation.
 version: 0.2.0
-repository: https://github.com/macss-dev/service_client
+
+repository: https://github.com/macss-dev/service_client/tree/main/code/dart
+homepage: https://github.com/macss-dev/service_client
+issue_tracker: https://github.com/macss-dev/service_client/issues
 
 environment:
   sdk: '>=3.0.0 <4.0.0'

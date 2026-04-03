@@ -1,4 +1,4 @@
-import 'package:service_client/service_client.dart';
+import '../../lib/service_client.dart';
 
 import '../models/todo.dart';
 import '../models/todo_failure.dart';

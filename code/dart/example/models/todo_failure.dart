@@ -1,4 +1,4 @@
-import 'package:service_client/service_client.dart';
+import '../../lib/service_client.dart';
 
 /// Error de dominio para operaciones sobre ToDo.
 class ToDoFailure extends ServiceFailure {
