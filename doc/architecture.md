@@ -54,6 +54,16 @@ operation outcomes as explicit values instead of exceptions.
 │   httpClient() ────── convenience one-shot function   │
 │   HttpClientException  error for HTTP failures        │
 └───────────────────────────────────────────────────────┘
+
+          ┌─── Future: GraphQL (lib/src/graphql/) ───┐
+          │                                           │
+          │   GraphQLClient ── implements ServiceClient│
+          │     ├── HTTP POST to /graphql              │
+          │     ├── Query string + variables           │
+          │     └── CQRS: Queries only (reads)         │
+          │                                           │
+          │   graphqlClient() ── one-shot sugar        │
+          └───────────────────────────────────────────┘
 ```
 
 ## Key abstractions
@@ -95,8 +105,10 @@ are added, this class will need to generalize (see [Roadmap](roadmap.md)).
 
 ## Data flow
 
+### Commands (REST)
+
 ```
-View ──► Controller ──► Service ──► ServiceClient.send() ──► HTTP server
+View ──► Controller ──► Service ──► HttpServiceClient.send() ──► REST API
                                           │
                                     ServiceResponse
                                           │
@@ -108,6 +120,21 @@ View ──► Controller ──► Service ──► ServiceClient.send() ─�
                             ├── Success → render data
                             └── Failure → render error
 ```
+
+### Queries (GraphQL — planned)
+
+```
+View ──► Controller ──► Service ──► GraphQLClient.send() ──► /graphql
+                                          │
+                                    ServiceResponse (fields requested)
+                                          │
+                              Service wraps in Result<T, E>
+                                          │
+                         (same flow as Commands from here)
+```
+
+In MACSS CQRS: Commands mutate state via REST, Queries read via GraphQL. Both return
+`Result<T, E>` — the Controller and View don't care about the transport underneath.
 
 ## Current HTTP-specific assumptions
 
@@ -124,7 +151,9 @@ concrete need (R-TEC-03), not anticipated.
 | `ServiceClientConfig.baseUrl` | URI-based addressing | MQ brokers use connection strings, not URLs |
 | `ServiceFailure.statusCode` | HTTP status code | Same as ServiceResponse |
 
-These will be generalized when a second transport implementation justifies the refactor.
+These will be generalized when a non-HTTP transport implementation justifies the refactor
+(see [Roadmap](roadmap.md)). Note: GraphQL uses HTTP POST as transport, so `GraphQLClient`
+will reuse the existing HTTP abstractions — it does not require generalization.
 
 ## File structure
 
