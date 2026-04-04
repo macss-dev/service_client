@@ -5,6 +5,10 @@ The format loosely follows [Keep a Changelog](https://keepachangelog.com/)
 and the project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [0.2.0] - 2026-03-16
+
+### Deprecated
+- `httpClient()` — use `HttpServiceClient` directly. Bypasses the Result pattern, creates/destroys a client per call, and logs with side effects. Will be removed in v0.3.0.
+
 ### Added
 - `Result<S, F>` sealed class with `Success` and `Failure` subtypes for explicit success/failure handling with compile-time exhaustive pattern matching
 - `ServiceFailure` base class for typed HTTP errors (extensible by consumers)

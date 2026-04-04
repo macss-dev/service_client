@@ -1,5 +1,7 @@
 import 'dart:developer' as dev;
 
+import 'package:http/http.dart' as http;
+
 import '../core/service_core.dart';
 import 'http_exceptions.dart';
 import 'http_service_client.dart';
@@ -8,6 +10,9 @@ import 'http_service_client.dart';
 ///
 /// Creates a temporary [HttpServiceClient], sends the request,
 /// and closes the client. Returns the parsed response data.
+///
+/// The optional [client] parameter exists for testing only.
+@Deprecated('Use HttpServiceClient directly. Will be removed in v0.3.0.')
 Future<dynamic> httpClient({
   required String method,
   required String baseUrl,
@@ -15,15 +20,16 @@ Future<dynamic> httpClient({
   Map<String, String>? headers,
   Map<String, dynamic>? body,
   String errorMessage = 'Error in HTTP request',
+  http.Client? httpClient,
 }) async {
-  ServiceClient? client;
+  ServiceClient? serviceClient;
   final config = ServiceClientConfig(
     baseUrl: Uri.parse(baseUrl),
     defaultHeaders: headers ?? const {},
   );
 
   try {
-    client = HttpServiceClient(config);
+    serviceClient = HttpServiceClient(config, client: httpClient);
 
     final request = ServiceRequest.http(
       method: method,
@@ -39,7 +45,7 @@ Future<dynamic> httpClient({
       dev.log('   Body: $body');
     }
 
-    final response = await client.send(request);
+    final response = await serviceClient.send(request);
 
     dev.log('🟢 HTTP Response:');
     dev.log('   Status: ${response.statusCode}');
@@ -53,6 +59,6 @@ Future<dynamic> httpClient({
     dev.log('   URL: $method $baseUrl$endpoint');
     throw Exception('$errorMessage: [Connection error] - $e');
   } finally {
-    await client?.close();
+    await serviceClient?.close();
   }
 }

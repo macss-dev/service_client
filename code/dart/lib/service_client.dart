@@ -17,6 +17,7 @@ export 'src/core/service_core.dart'
 export 'src/core/service_failure.dart' show ServiceFailure;
 
 /// http — client implementation
-export 'src/http/http_client.dart' show httpClient;
+/// ignore: deprecated_member_use_from_same_package
+export 'src/http/http_client.dart' show httpClient; // deprecated — removal in v0.3.0
 export 'src/http/http_exceptions.dart' show HttpClientException;
 export 'src/http/http_service_client.dart' show HttpServiceClient;

@@ -7,7 +7,8 @@ import '../core/service_core.dart';
 import 'http_exceptions.dart';
 
 class HttpServiceClient implements ServiceClient {
-  HttpServiceClient(this.config) : _client = http.Client();
+  HttpServiceClient(this.config, {http.Client? client})
+      : _client = client ?? http.Client();
 
   final ServiceClientConfig config;
   final http.Client _client;
