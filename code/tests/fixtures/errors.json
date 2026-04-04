@@ -1,0 +1,47 @@
+{
+  "description": "Parity fixtures for ServiceFailure and HttpClientException — validates B-03",
+  "cases": [
+    {
+      "id": "service-failure-full",
+      "description": "ServiceFailure with all fields",
+      "input": {
+        "status_code": 404,
+        "message": "Not Found",
+        "response_body": { "detail": "Resource does not exist" }
+      },
+      "expect": {
+        "status_code": 404,
+        "message": "Not Found",
+        "response_body": { "detail": "Resource does not exist" },
+        "to_string_contains": ["ServiceFailure", "Not Found", "404"]
+      }
+    },
+    {
+      "id": "service-failure-no-body",
+      "description": "ServiceFailure without responseBody defaults to null/None/undefined",
+      "input": { "status_code": 500, "message": "Internal Server Error" },
+      "expect": { "response_body_is_null": true }
+    },
+    {
+      "id": "http-exception-full",
+      "description": "HttpClientException with all fields",
+      "input": {
+        "status_code": 422,
+        "message": "Validation failed",
+        "response": { "errors": ["name is required"] }
+      },
+      "expect": {
+        "status_code": 422,
+        "message": "Validation failed",
+        "response": { "errors": ["name is required"] },
+        "to_string_contains": ["HttpClientException", "Validation failed", "422"]
+      }
+    },
+    {
+      "id": "http-exception-no-response",
+      "description": "HttpClientException without response defaults to null/None/undefined",
+      "input": { "status_code": 500, "message": "Internal Server Error" },
+      "expect": { "response_is_null": true }
+    }
+  ]
+}

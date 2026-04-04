@@ -12,8 +12,8 @@ Part of the [MACSS](https://github.com/macss-dev/macss-dev) ecosystem.
 | Language   | Package                  | Registry                                                                 | Status      |
 |------------|--------------------------|--------------------------------------------------------------------------|-------------|
 | Dart       | `service_client`         | [pub.dev](https://pub.dev/packages/service_client)                       | v0.2.0      |
-| TypeScript | `@macss/service-client`  | [npm](https://www.npmjs.com/package/@macss/service-client)               | Scaffold    |
-| Python     | `macss-service-client`   | [PyPI](https://pypi.org/project/macss-service-client/)                   | Scaffold    |
+| TypeScript | `@macss/service-client`  | [npm](https://www.npmjs.com/package/@macss/service-client)               | v0.2.0      |
+| Python     | `macss-service-client`   | [PyPI](https://pypi.org/project/macss-service-client/)                   | v0.2.0      |
 
 ---
 

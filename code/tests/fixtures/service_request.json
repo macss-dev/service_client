@@ -1,0 +1,35 @@
+{
+  "description": "Parity fixtures for ServiceRequest.http() factory",
+  "cases": [
+    {
+      "id": "request-http-protocol",
+      "description": ".http() sets protocol to 'http'",
+      "input": { "method": "GET", "endpoint": "todos/1" },
+      "expect": { "protocol": "http" }
+    },
+    {
+      "id": "request-http-default-error-message",
+      "description": ".http() default errorMessage",
+      "input": { "method": "GET", "endpoint": "todos/1" },
+      "expect": { "error_message": "Error in HTTP request" }
+    },
+    {
+      "id": "request-http-all-params",
+      "description": ".http() passes all parameters through",
+      "input": {
+        "method": "POST",
+        "endpoint": "todos",
+        "headers": { "Authorization": "Bearer token" },
+        "body": { "title": "Test" },
+        "error_message": "Failed to create todo"
+      },
+      "expect": {
+        "method": "POST",
+        "endpoint": "todos",
+        "headers": { "Authorization": "Bearer token" },
+        "body": { "title": "Test" },
+        "error_message": "Failed to create todo"
+      }
+    }
+  ]
+}

@@ -1,0 +1,144 @@
+{
+  "description": "Parity fixtures for HttpServiceClient transport behavior — validates B-04 to B-14",
+  "note": "These fixtures describe expected behavior. Each SDK test runner simulates HTTP responses via mocks/stubs and validates the behavior matches.",
+  "cases": [
+    {
+      "id": "transport-url-resolution",
+      "description": "B-08: URL = baseUrl + endpoint",
+      "config": { "base_url": "https://api.example.com/v1" },
+      "request": { "method": "GET", "endpoint": "todos/1" },
+      "expect": { "resolved_url": "https://api.example.com/v1/todos/1" }
+    },
+    {
+      "id": "transport-header-merge-order",
+      "description": "B-09: Content-Type → defaultHeaders → request headers",
+      "config": {
+        "base_url": "https://api.example.com",
+        "default_headers": { "X-Api-Key": "test-key" }
+      },
+      "request": {
+        "method": "GET",
+        "endpoint": "todos/1",
+        "headers": { "Authorization": "Bearer token" }
+      },
+      "expect": {
+        "has_content_type": true,
+        "has_x_api_key": "test-key",
+        "has_authorization": "Bearer token"
+      }
+    },
+    {
+      "id": "transport-header-override",
+      "description": "B-10: Request headers override defaultHeaders",
+      "config": {
+        "base_url": "https://api.example.com",
+        "default_headers": { "X-Api-Key": "original" }
+      },
+      "request": {
+        "method": "GET",
+        "endpoint": "todos/1",
+        "headers": { "X-Api-Key": "override" }
+      },
+      "expect": { "x_api_key": "override" }
+    },
+    {
+      "id": "transport-get-no-body",
+      "description": "B-04: GET sends no body",
+      "request": { "method": "GET", "endpoint": "todos/1" },
+      "expect": { "body_is_empty": true }
+    },
+    {
+      "id": "transport-post-null-body",
+      "description": "B-04: POST with null body sends '{}'",
+      "request": { "method": "POST", "endpoint": "todos", "body": null },
+      "expect": { "body": "{}" }
+    },
+    {
+      "id": "transport-post-object-body",
+      "description": "B-04: POST with object body sends JSON.stringify/json.dumps",
+      "request": {
+        "method": "POST",
+        "endpoint": "todos",
+        "body": { "title": "Test", "completed": false }
+      },
+      "expect": { "body_parsed": { "title": "Test", "completed": false } }
+    },
+    {
+      "id": "transport-patch-null-body",
+      "description": "B-04: PATCH with null body sends no body",
+      "request": { "method": "PATCH", "endpoint": "todos/1", "body": null },
+      "expect": { "body_is_empty": true }
+    },
+    {
+      "id": "transport-string-body-passthrough",
+      "description": "B-05: String body passes as-is without double-encoding",
+      "request": {
+        "method": "POST",
+        "endpoint": "todos",
+        "body": "{\"title\":\"Pre-encoded\"}"
+      },
+      "expect": {
+        "body": "{\"title\":\"Pre-encoded\"}",
+        "body_not_starts_with_quote": true
+      }
+    },
+    {
+      "id": "transport-2xx-json-response",
+      "description": "B-11: 2xx with JSON body returns parsed data",
+      "mock_response": {
+        "status": 200,
+        "body": "{\"id\":1,\"title\":\"Test\"}"
+      },
+      "expect": {
+        "status_code": 200,
+        "data": { "id": 1, "title": "Test" }
+      }
+    },
+    {
+      "id": "transport-2xx-empty-response",
+      "description": "B-12: 2xx with empty body returns null/None/undefined data",
+      "mock_response": { "status": 204, "body": "" },
+      "expect": { "status_code": 204, "data_is_null": true }
+    },
+    {
+      "id": "transport-4xx-throws-exception",
+      "description": "B-13: 4xx throws HttpClientException with parsed response",
+      "mock_response": {
+        "status": 404,
+        "body": "{\"error\":\"Not Found\"}"
+      },
+      "request": { "error_message": "Failed to fetch todo" },
+      "expect": {
+        "throws": "HttpClientException",
+        "exception_status_code": 404,
+        "exception_message": "Failed to fetch todo",
+        "exception_response": { "error": "Not Found" }
+      }
+    },
+    {
+      "id": "transport-5xx-throws-exception",
+      "description": "B-13: 5xx throws HttpClientException",
+      "mock_response": { "status": 500, "body": "Internal Server Error" },
+      "expect": { "throws": "HttpClientException" }
+    },
+    {
+      "id": "transport-non-json-error-body",
+      "description": "B-14: Non-JSON error body sets response to null",
+      "mock_response": { "status": 502, "body": "<html>Error</html>" },
+      "expect": {
+        "throws": "HttpClientException",
+        "exception_response_is_null": true
+      }
+    },
+    {
+      "id": "transport-connection-error",
+      "description": "B-14: Connection error wraps in RuntimeError/Error with [Connection error]",
+      "mock_response": { "type": "network_error" },
+      "request": { "error_message": "Request failed" },
+      "expect": {
+        "throws": "RuntimeError",
+        "message_contains": "[Connection error]"
+      }
+    }
+  ]
+}

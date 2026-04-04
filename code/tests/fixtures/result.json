@@ -1,0 +1,37 @@
+{
+  "description": "Parity fixtures for Result pattern — validates B-01, B-02 across all SDKs",
+  "cases": [
+    {
+      "id": "result-success-int",
+      "description": "success() wraps an integer value",
+      "input": { "type": "success", "value": 42 },
+      "expect": { "is_success": true, "is_failure": false, "value": 42 }
+    },
+    {
+      "id": "result-failure-string",
+      "description": "failure() wraps a string error",
+      "input": { "type": "failure", "error": "something went wrong" },
+      "expect": { "is_success": false, "is_failure": true, "error": "something went wrong" }
+    },
+    {
+      "id": "result-success-list",
+      "description": "success() wraps a list value",
+      "input": { "type": "success", "value": [1, 2, 3] },
+      "expect": { "is_success": true, "is_failure": false, "value": [1, 2, 3] }
+    },
+    {
+      "id": "result-failure-service-failure",
+      "description": "failure() wraps a ServiceFailure",
+      "input": {
+        "type": "failure",
+        "error": { "status_code": 500, "message": "Internal Server Error" }
+      },
+      "expect": {
+        "is_success": false,
+        "is_failure": true,
+        "error_status_code": 500,
+        "error_message": "Internal Server Error"
+      }
+    }
+  ]
+}

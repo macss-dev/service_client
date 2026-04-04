@@ -1,0 +1,29 @@
+{
+  "description": "Parity fixtures for ServiceClientConfig — validates B-06, B-07",
+  "cases": [
+    {
+      "id": "config-normalize-appends-slash",
+      "description": "baseUrl without trailing slash gets one appended",
+      "input": { "base_url": "https://api.example.com/v1" },
+      "expect": { "base_url_ends_with_slash": true }
+    },
+    {
+      "id": "config-normalize-preserves-slash",
+      "description": "baseUrl with trailing slash is unchanged",
+      "input": { "base_url": "https://api.example.com/v1/" },
+      "expect": { "base_url_ends_with_slash": true }
+    },
+    {
+      "id": "config-default-timeout",
+      "description": "Default timeout is 30s (30000ms / 30.0s depending on SDK)",
+      "input": { "base_url": "https://api.example.com" },
+      "expect": { "timeout_seconds": 30 }
+    },
+    {
+      "id": "config-default-headers-empty",
+      "description": "Default headers is empty",
+      "input": { "base_url": "https://api.example.com" },
+      "expect": { "default_headers": {} }
+    }
+  ]
+}
