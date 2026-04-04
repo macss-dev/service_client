@@ -1,6 +1,6 @@
 {
   "name": "@macss/service-client",
-  "version": "0.0.1",
+  "version": "0.2.0",
   "description": "Service client abstraction with the Result pattern for TypeScript. Transport-agnostic interface with an HTTP implementation.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
