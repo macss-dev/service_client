@@ -1,4 +1,4 @@
-import '../lib/service_client.dart';
+import 'package:service_client/service_client.dart';
 
 import 'controllers/todo_controller.dart';
 
