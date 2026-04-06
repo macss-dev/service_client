@@ -26,7 +26,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/macss-dev/service_client.git",
+    "url": "git+https://github.com/macss-dev/service_client.git",
     "directory": "code/ts"
   },
   "bugs": {
